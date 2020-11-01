@@ -31,8 +31,8 @@ Es sei ein Quantum von 100ms festgelegt.
     \begin{tabular}{c|cccc|c|cccc}
         \multicolumn{6}{c}{\textbf{Zeitstrahl}} & \multicolumn{4}{|c}{\textbf{Verbleibende Zeit}}                                                                                                                                   \\ \hline
         \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Slot 3} & \textbf{Slot 4} & \textbf{Event}  & \textbf{P0}  & \textbf{P1}  & \textbf{P2} & \textbf{P3} \\ \hline
-        0ms                                     & \textbf{P0}                                     &                 &                 &                 & P0 join         & \textbf{100} &              &             &             \\
-        30ms                                    & P0                                              & \textbf{P1}     &                 &                 & P1 join         & \textbf{70}  & 250          &             &             \\
+        0ms                                     & \textbf{P0}                                     &                 &                 &                 & P0 join         & \textbf{150} &              &             &             \\
+        30ms                                    & P0                                              & \textbf{P1}     &                 &                 & P1 join         & \textbf{120} & 250          &             &             \\
         100ms                                   & \textbf{P1}                                     & \textbf{P0}     &                 &                 & \textbf{Rotate} & \textbf{50}  & 250          &             &             \\
         120ms                                   & P1                                              & P0              & \textbf{P2}     &                 & P2 join         &              & \textbf{230} & 50          &             \\
         130ms                                   & P1                                              & P0              & P2              & \textbf{P3}     & P3 join         &              & \textbf{220} &             & 170         \\

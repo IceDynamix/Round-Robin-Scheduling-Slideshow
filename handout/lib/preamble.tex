@@ -4,18 +4,11 @@
 
 % GENERAL --------------------------------------
 
-\usepackage{tikz} % Drawings
-\usepackage{wrapfig} % Inline images
-\usepackage{amsmath,amssymb,amsthm} % Advanced math
-\usepackage{xcolor} % Colored text
-\usepackage{hyperref} % Clickable TOC
 \renewcommand{\baselinestretch}{1.2} % Line height
-\usepackage{graphicx} % Graphics *but better*
 \usepackage{adjustbox}
 \usepackage{bookmark}
-\usepackage{minted}
-\usepackage{titling}
 \usepackage[a4paper, margin=4cm]{geometry}
+\usepackage{titling}
 
 \setlength{\droptitle}{-8em}     % Eliminate the default vertical space
 \addtolength{\droptitle}{-4pt}   % Only a guess. Use this for adjustment
@@ -25,37 +18,9 @@
 % \input{lib/glossary.tex} % Glossary
 % \input{lib/nomenclature.tex} % Nomenclature/Symbolverzeichnis
 
-% MACROS ----------------------------------------
-
-% Displaystyle fractions
-\newcommand\ddfrac[2]{\ensuremath{\frac{\displaystyle #1}{\displaystyle #2}}}
-
-% TIKZ ------------------------------------
-\usepackage{pgf,tikz,pgfplots}
-\usepackage{mathrsfs}
-\usetikzlibrary[patterns]
-\pgfplotsset{compat=1.15}
-\usetikzlibrary{arrows}
-\newcommand{\degre}{\ensuremath{^\circ}}
-
 % GERMAN --------------------------------------
 
 \usepackage[ngerman]{babel} % german
-\usepackage{csquotes}
-
-% https://www.overleaf.com/learn/latex/Typesetting_quotations
-% use \say{} to quote something
-\usepackage[
-    left = \glqq{},
-    right = \grqq{},
-    leftsub = \glq{},
-    rightsub = \grq{}
-]{dirtytalk} % Correct quotation marks
-
-\newtheorem*{theorem}{Hypothese} % Rename
-\addto\captionsngerman{%
-    \renewcommand{\abstractname}{Vorwort}
-}
 
 % BIBLIOGRAPHY --------------------------------------
 
