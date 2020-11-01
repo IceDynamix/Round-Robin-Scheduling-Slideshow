@@ -1,1 +1,20 @@
 \section{Round Robin}
+
+\begin{frame}
+    \frametitle{Funktionsweise}
+
+    \metroset{block=fill}
+
+    \begin{block}{Quantum}
+        Unterteilung der Arbeitszeit in Zeitslots
+        % Üblicherweise zwischen 10ms und 100ms
+        % Wenn Quantum zu groß -> FCFS
+        % Wenn Quantum zu klein -> Kontext Wechsel Overhead
+    \end{block}
+
+    \begin{block}{Warteschlange}
+        Wenn ein Prozess innerhalb eines Quantums nicht fertig ist, wird es wieder hinten an die Warteschlange gesetzt.
+        % Falls er doch fertig ist, wird das jetzige Quantum zurückgesetzt und der nächste Prozess bekommt wieder ein vollständiges Quantum.
+    \end{block}
+
+\end{frame}
