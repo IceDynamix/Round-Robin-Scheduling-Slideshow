@@ -1,11 +1,66 @@
-\documentclass[twocolumn]{article}
+\documentclass{article}
 
 \input{lib/preamble.tex}
 
 \begin{document}
 \maketitle
 
-\section{Quellen}
+\section{Konzept}
+
+Es wird ein Quantum (eine Art Zeitslot) festgelegt, welcher üblicherweise zwischen 10ms und 100ms liegt. Wenn ein Prozess länger braucht als ein Quantum, wird es wieder hinten an die Warteschlange geschickt. Wenn ein Prozess während eines Quantums fertig wird, bekommt der nächste ein vollständiges Quantum.
+
+\section{Beispiel}
+
+Es sei ein Quantum von 100ms festgelegt.
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c}
+        \textbf{Prozess} & \textbf{Ankunftszeit} & \textbf{Prozessdauer} \\
+        \hline{}
+        P0               & 0ms                   & 150ms                 \\
+        P1               & 30ms                  & 250ms                 \\
+        P2               & 120ms                 & 50ms                  \\
+        P3               & 130ms                 & 170ms
+    \end{tabular}
+    \caption{Beispiel Prozesse}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|cccc|c|cccc}
+        \multicolumn{6}{c}{\textbf{Zeitstrahl}} & \multicolumn{4}{|c}{\textbf{Verbleibende Zeit}}                                                                                                                                   \\ \hline
+        \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Slot 3} & \textbf{Slot 4} & \textbf{Event}  & \textbf{P0}  & \textbf{P1}  & \textbf{P2} & \textbf{P3} \\ \hline
+        0ms                                     & \textbf{P0}                                     &                 &                 &                 & P0 join         & \textbf{100} &              &             &             \\
+        30ms                                    & P0                                              & \textbf{P1}     &                 &                 & P1 join         & \textbf{70}  & 250          &             &             \\
+        100ms                                   & \textbf{P1}                                     & \textbf{P0}     &                 &                 & \textbf{Rotate} & \textbf{50}  & 250          &             &             \\
+        120ms                                   & P1                                              & P0              & \textbf{P2}     &                 & P2 join         &              & \textbf{230} & 50          &             \\
+        130ms                                   & P1                                              & P0              & P2              & \textbf{P3}     & P3 join         &              & \textbf{220} &             & 170         \\
+        200ms                                   & \textbf{P0}                                     & \textbf{P2}     & \textbf{P3}     & \textbf{P1}     & \textbf{Rotate} & 50           & \textbf{150} &             &             \\
+        250ms                                   & P2                                              & P3              & P1              &                 & P0 finish       & \textbf{0}   &              & 50          &             \\
+        300ms                                   & P3                                              & P1              &                 &                 & P2 finish       &              &              & \textbf{0}  & 170         \\
+        400ms                                   & \textbf{P1}                                     & \textbf{P3}     &                 &                 & \textbf{Rotate} &              & 150          &             & \textbf{70} \\
+        500ms                                   & \textbf{P3}                                     & \textbf{P1}     &                 &                 & \textbf{Rotate} &              & \textbf{50}  &             & 70          \\
+        570ms                                   & P1                                              &                 &                 &                 & P3 finish       &              & 50           &             & \textbf{0}  \\
+        620ms                                   &                                                 &                 &                 &                 & P1 finish       &              & \textbf{0}   &             &
+    \end{tabular}
+    \caption{Ablauf im Round Robin Scheduling}
+\end{table}
+
+\section{Fazit}
+
+\begin{itemize}
+    \item Alle Prozesse werden hier mit der gleichen Dringlichkeit bearbeitet (kann aber auch keine Prioritäten setzen)
+    \item Es wird sicher gegangen, dass kein Prozess verhungert
+    \item Niedrige durchschnittliche Verweilzeit für alle Prozesse
+    \item Algorithmus ist leicht zu implementieren
+    \item Wichtig: Das Quantum muss gut gewählt sein
+          \begin{itemize}
+              \item Wenn das Quantum zu groß ist, ähnelt es einem First Come First Serve (FCFS/FIFO)
+              \item Wenn das Quantum zu klein ist, ähnelt es einem Shortest Job First (SJF) und der Kontextwechsel Aufwand wird größer
+          \end{itemize}
+\end{itemize}
+
 \nocite{*}
 \printbibliography
 
