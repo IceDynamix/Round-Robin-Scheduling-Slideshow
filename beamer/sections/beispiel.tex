@@ -10,10 +10,10 @@
             \begin{tabular}{c|c|c}
                 \textbf{Prozess} & \textbf{Ankunftszeit} & \textbf{Prozessdauer} \\
                 \hline{}
-                P0               & 0ms                   & 150ms                 \\
-                P1               & 30ms                  & 250ms                 \\
-                P2               & 120ms                 & 50ms                  \\
-                P3               & 130ms                 & 170ms
+                \PZero{}         & 0ms                   & 150ms                 \\
+                \POne{}          & 30ms                  & 250ms                 \\
+                \PTwo{}          & 120ms                 & 50ms                  \\
+                \PThree{}        & 130ms                 & 170ms
             \end{tabular}
         \end{adjustbox}
     \end{table}
@@ -21,21 +21,21 @@
     \begin{table}[]
         \begin{adjustbox}{width=0.8\textwidth}
             \begin{tabular}{c|cccc|c|cccc}
-                \multicolumn{6}{c}{\textbf{Zeitstrahl}} & \multicolumn{4}{|c}{\textbf{Verbleibende Zeit}}                                                                                                                                \\ \hline
-                \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Slot 3} & \textbf{Slot 4} & \textbf{Event} & \textbf{P0} & \textbf{P1} & \textbf{P2} & \textbf{P3} \\ \hline
-                0ms                                     & \alert{P0}                                      &                 &                 &                 & P0 join        & \alert{150} &             &             &             \\
-                \pause 30ms                             & P0                                              & \alert{P1}      &                 &                 & P1 join        & \alert{120} & 250         &             &             \\
-                \pause 100ms                            & \alert{P1}                                      & \alert{P0}      &                 &                 & \alert{Rotate} & \alert{50}  & 250         &             &             \\
-                \pause 120ms                            & P1                                              & P0              & \alert{P2}      &                 & P2 join        &             & \alert{230} & 50          &             \\
-                \pause 130ms                            & P1                                              & P0              & P2              & \alert{P3}      & P3 join        &             & \alert{220} &             & 170         \\
-                \pause 200ms                            & \alert{P0}                                      & \alert{P2}      & \alert{P3}      & \alert{P1}      & \alert{Rotate} & 50          & \alert{150} &             &             \\
-                \pause 250ms                            & P2                                              & P3              & P1              &                 & P0 finish      & \alert{0}   &             & 50          &             \\
+                \multicolumn{6}{c}{\textbf{Zeitstrahl}} & \multicolumn{4}{|c}{\textbf{Verbleibende Zeit}}                                                                                                                                                         \\ \hline
+                \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Slot 3} & \textbf{Slot 4} & \textbf{Event}   & \textbf{\PZero{}} & \textbf{\POne{}} & \textbf{\PTwo{}} & \textbf{\PThree{}} \\ \hline
+                0ms                                     & \PZero{}                                        &                 &                 &                 & \PZero{} join    & \alert{150}       &                  &                  &                    \\
+                \pause 30ms                             & \PZero{}                                        & \POne{}         &                 &                 & \POne{} join     & \alert{120}       & 250              &                  &                    \\
+                \pause 100ms                            & \POne{}                                         & \PZero{}        &                 &                 & \alert{Rotate}   & \alert{50}        & 250              &                  &                    \\
+                \pause 120ms                            & \POne{}                                         & \PZero{}        & \PTwo{}         &                 & \PTwo{} join     &                   & \alert{230}      & 50               &                    \\
+                \pause 130ms                            & \POne{}                                         & \PZero{}        & \PTwo{}         & \PThree{}       & \PThree{} join   &                   & \alert{220}      &                  & 170                \\
+                \pause 200ms                            & \PZero{}                                        & \PTwo{}         & \PThree{}       & \POne{}         & \alert{Rotate}   & 50                & \alert{150}      &                  &                    \\
+                \pause 250ms                            & \PTwo{}                                         & \PThree{}       & \POne{}         &                 & \PZero{} finish  & \alert{0}         &                  & 50               &                    \\
                 % P2 würde hier ein vollständiges Quantum bekommen anstatt due 50ms die vom vorherigen übrig bleiben
-                \pause 300ms                            & P3                                              & P1              &                 &                 & P2 finish      &             &             & \alert{0}   & 170         \\
-                \pause 400ms                            & \alert{P1}                                      & \alert{P3}      &                 &                 & \alert{Rotate} &             & 150         &             & \alert{70}  \\
-                \pause 500ms                            & \alert{P3}                                      & \alert{P1}      &                 &                 & \alert{Rotate} &             & \alert{50}  &             & 70          \\
-                \pause 570ms                            & P1                                              &                 &                 &                 & P3 finish      &             & 50          &             & \alert{0}   \\
-                \pause 620ms                            &                                                 &                 &                 &                 & P1 finish      &             & \alert{0}   &             &
+                \pause 300ms                            & \PThree{}                                       & \POne{}         &                 &                 & \PTwo{} finish   &                   &                  & \alert{0}        & 170                \\
+                \pause 400ms                            & \POne{}                                         & \PThree{}       &                 &                 & \alert{Rotate}   &                   & 150              &                  & \alert{70}         \\
+                \pause 500ms                            & \PThree{}                                       & \POne{}         &                 &                 & \alert{Rotate}   &                   & \alert{50}       &                  & 70                 \\
+                \pause 570ms                            & \POne{}                                         &                 &                 &                 & \PThree{} finish &                   & 50               &                  & \alert{0}          \\
+                \pause 620ms                            &                                                 &                 &                 &                 & \POne{} finish   &                   & \alert{0}        &                  &
             \end{tabular}
         \end{adjustbox}
     \end{table}
