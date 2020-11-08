@@ -1,0 +1,60 @@
+\section{Aufgabe}
+
+\begin{frame}
+    \frametitle{Zeitberechnung}
+
+    \begin{table}[]
+        \begin{tabular}{c|c|c}
+            \textbf{Prozess} & \textbf{Ankunftszeit} & \textbf{Prozessdauer} \\
+            \hline{}
+            P0               & 4ms                   & 317ms                 \\
+            P1               & 105ms                 & 16ms                  \\
+            P2               & 220ms                 & 186ms
+        \end{tabular}
+    \end{table}
+
+    \begin{block}{Aufgabe}
+        \begin{enumerate}
+            \item Bestimme die Wartezeit (Wie viel l{\"a}nger der Prozess als die Prozessdauer braucht) f{\"u}r jeden Prozess mit Quantum $q = 100ms$
+            \item Vergleiche die Wartezeiten mit der eines FCFS Algorithmus
+        \end{enumerate}
+    \end{block}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Wartezeiten}
+
+    \begin{table}[]
+        \begin{adjustbox}{width=0.8\textwidth}
+            \begin{tabular}{c|ccc|ccc}
+                \multicolumn{4}{c}{\textbf{Zeitstrahl}} & \multicolumn{3}{|c}{\textbf{Verbleibende Zeit}}                                                                                                        \\ \hline
+                \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Event}       & \multicolumn{1}{l}{\textbf{P0}} & \textbf{P1} & \textbf{P2} \\ \hline
+                4ms                                     & P0                                              &                 & P0 join              & \alert{317}                     &             &             \\
+                104ms                                   & P0                                              &                 & Rotate               & \alert{217}                     &             &             \\
+                % P0 bekommt hier zwei Quantums da niemand bislang in der Queue war
+                105ms                                   & P0                                              & P1              & P1 join              & \alert{216}                     & 16          &             \\
+                204ms                                   & P1                                              & P0              & Rotate               & \alert{117}                     &             &             \\
+                220ms                                   & P0                                              & P2              & P1 finish \& P2 join &                                 & \alert{0}   & 186         \\
+                % P1 endet gleichzeitig zum Join von P2, P1 wird in diesem Beispiel abgearbeitet bevor P2 hinzugefuegt wird
+                330ms                                   & P2                                              & P0              & Rotate               & \alert{17}                      &             &             \\
+                430ms                                   & P0                                              & P2              & Rotate               &                                 &             & \alert{86}  \\
+                447ms                                   & P2                                              &                 & P0 finish            & \alert{0}                       &             &             \\
+                533ms                                   &                                                 &                 & P2 finish            &                                 &             & \alert{0}
+            \end{tabular}
+        \end{adjustbox}
+    \end{table}
+
+    \pause
+
+    \begin{table}[]
+        \begin{tabular}{c|c|c|c|c}
+            \textbf{Prozess} & \textbf{Start} & \textbf{Ende} & \textbf{Wartezeit (RR)} & \textbf{Wartezeit (FCFS)} \\
+            \hline
+            P0               & 4ms            & 447ms         & 126ms                   & 0ms                       \\
+            P1               & 105ms          & 220ms         & 99ms                    & 342ms                     \\
+            P2               & 220ms          & 533ms         & 127ms                   & 0ms
+        \end{tabular}
+    \end{table}
+
+\end{frame}
