@@ -1,8 +1,13 @@
 \documentclass{article}
-
 \input{lib/preamble.tex}
 
 \begin{document}
+
+\newcommand{\PZero}{\textcolor{red}{P0}}
+\newcommand{\POne}{\textcolor{yellow}{P1}}
+\newcommand{\PTwo}{\textcolor{purple}{P2}}
+\newcommand{\PThree}{\textcolor{blue}{P3}}
+
 \maketitle
 
 \section{Konzept}
@@ -18,10 +23,10 @@ Es sei ein Quantum von 100ms festgelegt.
     \begin{tabular}{c|c|c}
         \textbf{Prozess} & \textbf{Ankunftszeit} & \textbf{Prozessdauer} \\
         \hline{}
-        P0               & 0ms                   & 150ms                 \\
-        P1               & 30ms                  & 250ms                 \\
-        P2               & 120ms                 & 50ms                  \\
-        P3               & 130ms                 & 170ms
+        \PZero{}         & 0ms                   & 150ms                 \\
+        \POne{}          & 30ms                  & 250ms                 \\
+        \PTwo{}          & 120ms                 & 50ms                  \\
+        \PThree{}        & 130ms                 & 170ms
     \end{tabular}
     \caption{Beispiel Prozesse}
 \end{table}
@@ -29,23 +34,80 @@ Es sei ein Quantum von 100ms festgelegt.
 \begin{table}[!h]
     \centering
     \begin{tabular}{c|cccc|c|cccc}
-        \multicolumn{6}{c}{\textbf{Zeitstrahl}} & \multicolumn{4}{|c}{\textbf{Verbleibende Zeit}}                                                                                                                                   \\ \hline
-        \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Slot 3} & \textbf{Slot 4} & \textbf{Event}  & \textbf{P0}  & \textbf{P1}  & \textbf{P2} & \textbf{P3} \\ \hline
-        0ms                                     & \textbf{P0}                                     &                 &                 &                 & P0 join         & \textbf{150} &              &             &             \\
-        30ms                                    & P0                                              & \textbf{P1}     &                 &                 & P1 join         & \textbf{120} & 250          &             &             \\
-        100ms                                   & \textbf{P1}                                     & \textbf{P0}     &                 &                 & \textbf{Rotate} & \textbf{50}  & 250          &             &             \\
-        120ms                                   & P1                                              & P0              & \textbf{P2}     &                 & P2 join         &              & \textbf{230} & 50          &             \\
-        130ms                                   & P1                                              & P0              & P2              & \textbf{P3}     & P3 join         &              & \textbf{220} &             & 170         \\
-        200ms                                   & \textbf{P0}                                     & \textbf{P2}     & \textbf{P3}     & \textbf{P1}     & \textbf{Rotate} & 50           & \textbf{150} &             &             \\
-        250ms                                   & P2                                              & P3              & P1              &                 & P0 finish       & \textbf{0}   &              & 50          &             \\
-        300ms                                   & P3                                              & P1              &                 &                 & P2 finish       &              &              & \textbf{0}  & 170         \\
-        400ms                                   & \textbf{P1}                                     & \textbf{P3}     &                 &                 & \textbf{Rotate} &              & 150          &             & \textbf{70} \\
-        500ms                                   & \textbf{P3}                                     & \textbf{P1}     &                 &                 & \textbf{Rotate} &              & \textbf{50}  &             & 70          \\
-        570ms                                   & P1                                              &                 &                 &                 & P3 finish       &              & 50           &             & \textbf{0}  \\
-        620ms                                   &                                                 &                 &                 &                 & P1 finish       &              & \textbf{0}   &             &
+        \multicolumn{6}{c}{\textbf{Zeitstrahl}} & \multicolumn{4}{|c}{\textbf{Verbleibende Zeit}}                                                                                                                                                         \\ \hline
+        \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Slot 3} & \textbf{Slot 4} & \textbf{Event}   & \textbf{\PZero{}} & \textbf{\POne{}} & \textbf{\PTwo{}} & \textbf{\PThree{}} \\ \hline
+        0ms                                     & \PZero{}                                        &                 &                 &                 & \PZero{} join    & \textbf{150}      &                  &                  &                    \\
+        30ms                                    & \PZero{}                                        & \POne{}         &                 &                 & \POne{} join     & \textbf{120}      & 250              &                  &                    \\
+        100ms                                   & \POne{}                                         & \PZero{}        &                 &                 & \textbf{Rotate}  & \textbf{50}       & 250              &                  &                    \\
+        120ms                                   & \POne{}                                         & \PZero{}        & \PTwo{}         &                 & \PTwo{} join     &                   & \textbf{230}     & 50               &                    \\
+        130ms                                   & \POne{}                                         & \PZero{}        & \PTwo{}         & \PThree{}       & \PThree{} join   &                   & \textbf{220}     &                  & 170                \\
+        200ms                                   & \PZero{}                                        & \PTwo{}         & \PThree{}       & \POne{}         & \textbf{Rotate}  & 50                & \textbf{150}     &                  &                    \\
+        250ms                                   & \PTwo{}                                         & \PThree{}       & \POne{}         &                 & \PZero{} finish  & \textbf{0}        &                  & 50               &                    \\
+        % P2 würde hier ein vollständiges Quantum bekommen anstatt due 50ms die vom vorherigen übrig bleiben
+        300ms                                   & \PThree{}                                       & \POne{}         &                 &                 & \PTwo{} finish   &                   &                  & \textbf{0}       & 170                \\
+        400ms                                   & \POne{}                                         & \PThree{}       &                 &                 & \textbf{Rotate}  &                   & 150              &                  & \textbf{70}        \\
+        500ms                                   & \PThree{}                                       & \POne{}         &                 &                 & \textbf{Rotate}  &                   & \textbf{50}      &                  & 70                 \\
+        570ms                                   & \POne{}                                         &                 &                 &                 & \PThree{} finish &                   & 50               &                  & \textbf{0}         \\
+        620ms                                   &                                                 &                 &                 &                 & \POne{} finish   &                   & \textbf{0}       &                  &
     \end{tabular}
     \caption{Ablauf im Round Robin Scheduling}
 \end{table}
+
+\section{Aufgabe}
+
+\subsection{Aufgabenstellung}
+
+\begin{table}[!h]
+    \begin{tabular}{c|c|c}
+        \textbf{Prozess} & \textbf{Ankunftszeit} & \textbf{Prozessdauer} \\
+        \hline{}
+        \PZero{}         & 4ms                   & 317ms                 \\
+        \POne{}          & 105ms                 & 16ms                  \\
+        \PTwo{}          & 220ms                 & 186ms
+    \end{tabular}
+    \caption{Gegebene Prozesse}
+\end{table}
+
+\begin{enumerate}
+    \item Bestimme die Wartezeit (Wie viel länger der Prozess als die Prozessdauer braucht) für jeden Prozess mit einem Quantum von 100ms
+    \item Vergleiche die Wartezeiten mit der eines FCFS Algorithmus
+\end{enumerate}
+
+\subsection{Lösung}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|cc|c|ccc}
+        \multicolumn{4}{c}{\textbf{Zeitstrahl}} & \multicolumn{3}{|c}{\textbf{Verbleibende Zeit}}                                                                                                                                  \\ \hline
+        \textbf{Zeit}                           & \textbf{Slot 1}                                 & \textbf{Slot 2} & \textbf{Event}                 & \multicolumn{1}{l}{\textbf{\PZero{}}} & \textbf{\POne{}} & \textbf{\PTwo{}} \\ \hline
+        4ms                                     & \PZero{}                                        &                 & \PZero{} join                  & \textbf{317}                          &                  &                  \\
+        104ms                                   & \PZero{}                                        &                 & \textbf{Rotate}                & \textbf{217}                          &                  &                  \\
+        % P0 bekommt hier zwei Quantums da niemand bislang in der Queue war
+        105ms                                   & \PZero{}                                        & \POne{}         & \POne{} join                   & \textbf{216}                          & 16               &                  \\
+        204ms                                   & \POne{}                                         & \PZero{}        & \textbf{Rotate}                & \textbf{117}                          &                  &                  \\
+        220ms                                   & \PZero{}                                        & \PTwo{}         & \POne{} finish \& \PTwo{} join &                                       & \textbf{0}       & 186              \\
+        % P1 endet gleichzeitig zum Join von P2, P1 wird in diesem Beispiel abgearbeitet bevor \PTwo{} hinzugefuegt wird
+        330ms                                   & \PTwo{}                                         & \PZero{}        & \textbf{Rotate}                & \textbf{17}                           &                  &                  \\
+        430ms                                   & \PZero{}                                        & \PTwo{}         & \textbf{Rotate}                &                                       &                  & \textbf{86}      \\
+        447ms                                   & \PTwo{}                                         &                 & \PZero{} finish                & \textbf{0}                            &                  &                  \\
+        533ms                                   &                                                 &                 & \PTwo{} finish                 &                                       &                  & \textbf{0}
+    \end{tabular}
+    \caption{Ablauf}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+        \textbf{Prozess} & \textbf{Start} & \textbf{Ende} & \textbf{Wartezeit (RR)} & \textbf{Wartezeit (FCFS)} \\
+        \hline
+        \PZero{}         & 4ms            & 447ms         & 126ms                   & 0ms                       \\
+        \POne{}          & 105ms          & 220ms         & 99ms                    & 342ms                     \\
+        \PTwo{}          & 220ms          & 533ms         & 127ms                   & 0ms
+    \end{tabular}
+    \caption{Wartezeit und Vergleich mit FCFS}
+\end{table}
+
+\pagebreak
 
 \section{Fazit}
 
